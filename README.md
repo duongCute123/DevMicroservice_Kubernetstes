@@ -10,3 +10,4 @@
 # Service về danh sách prodcuts
 ![thêm sản phẩm](Image/Day1/addproducts.png)
 ![lấy danh sách người dùng](Image/Day1/listproducts.png)
+![chứa thông tin sản phẩm và thông tin người dùng](Image/Day1/product%20and%20user%20in%20object.png)
