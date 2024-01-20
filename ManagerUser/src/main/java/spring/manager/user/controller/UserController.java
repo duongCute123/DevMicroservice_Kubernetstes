@@ -17,7 +17,7 @@ import spring.manager.user.reponseve.UserReponsive;
 import spring.manager.user.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 public class UserController {
 
 	@Autowired
