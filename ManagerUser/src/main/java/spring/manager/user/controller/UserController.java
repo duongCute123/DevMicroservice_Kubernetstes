@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import spring.manager.user.entity.User;
+import spring.manager.user.reponseve.UserRedisReponse;
 import spring.manager.user.reponseve.UserReponsive;
 import spring.manager.user.service.UserService;
 
@@ -24,12 +25,19 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	UserReponsive userReponsive;
+	@Autowired
+	UserRedisReponse userRedisReponse;
 
 	// Lấy danh sách user
 	@GetMapping("/user")
 	public List<User> getAllUser() {
 		List<User> listUser = new ArrayList<>();
-		listUser = userService.findAllUser();
+		if (userRedisReponse.findAll()==null) {
+			listUser = userService.findAllUser();
+		}else {
+			listUser=userRedisReponse.findAll();
+		}
+		
 		return listUser;
 	}
 
@@ -37,6 +45,7 @@ public class UserController {
 	@PostMapping("/user")
 	public User addUser(@RequestBody User user) {
 		userService.addUser(user);
+		userRedisReponse.saveUser(user);
 		return user;
 	}
 
