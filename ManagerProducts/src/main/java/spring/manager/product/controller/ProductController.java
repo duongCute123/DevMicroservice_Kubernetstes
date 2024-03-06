@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import spring.manager.product.entity.Product;
 import spring.manager.product.entity.User;
 import spring.manager.product.reponsitory.OrderReponsitory;
+import spring.manager.product.reponsitory.ProductRedisReponse;
 import spring.manager.product.reponsitory.ProductReponsitory;
 import spring.manager.product.service.ProductService;
 
@@ -31,18 +32,26 @@ public class ProductController {
 	RestTemplate restTemplate;
 	@Autowired
 	ProductReponsitory productReponsitory;
+	@Autowired
+	ProductRedisReponse productRedisReponse;
 
 	// Lay danh sach san pham
 	@GetMapping("/product")
 	public List<Product> findAllProduct() {
 		List<Product> listProducts = new ArrayList<>();
-		listProducts = productService.findAllProducts();
+		if (productRedisReponse.findAll() == null) {
+			listProducts = productService.findAllProducts();
+		} else {
+			listProducts = productRedisReponse.findAll();
+		}
 		return listProducts;
+
 	}
 
 	@PostMapping("/product")
 	public Product addProduct(@RequestBody Product product) {
 		productService.addProducts(product);
+		productRedisReponse.saveProduct(product);
 		return product;
 	}
 
