@@ -7,18 +7,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import spring.manager.product.entity.Product;
+
 @Repository
 public class ProductRedisReponse {
 	private HashOperations hashOperations;
 	private RedisTemplate redisTemplate;
 
-	 public ProductRedisReponse(RedisTemplate redisTemplate) {
+	public ProductRedisReponse(RedisTemplate redisTemplate) {
 		this.hashOperations = redisTemplate.opsForHash();
 		this.redisTemplate = redisTemplate;
 	}
 
 	public void saveProduct(Product product) {
 		hashOperations.put("PRODUCT", product.getId(), product);
+	}
+
+	public void saveOrder(OrderReponsitory orderReponsitory) {
+		hashOperations.put("ORDER",1, orderReponsitory);
 	}
 
 	public List<Product> findAll() {

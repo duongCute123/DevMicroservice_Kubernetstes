@@ -1,9 +1,11 @@
 package spring.manager.product.reponsitory;
 
+import java.io.Serializable;
+
 import spring.manager.product.entity.Product;
 import spring.manager.product.entity.User;
 
-public class OrderReponsitory {
+public class OrderReponsitory implements Serializable {
 	private Product product;
 	private User user;
 	public Product getProduct() {

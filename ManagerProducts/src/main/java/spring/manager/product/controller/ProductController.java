@@ -56,6 +56,7 @@ public class ProductController {
 	}
 
 	// Lấy thong tin người dùng và product
+	// Lấy và lưu đơn hàng vào trong redis
 	@GetMapping("/orderproduct/{id}/{productId}")
 	public ResponseEntity<OrderReponsitory> orderProductByUser(@PathVariable Integer id,
 			@PathVariable Integer productId) {
@@ -72,6 +73,7 @@ public class ProductController {
 		User user = reponse.getBody();
 		orderReponsitory.setUser(user);
 		orderReponsitory.setProduct(product);
+		productRedisReponse.saveOrder(orderReponsitory);
 		return new ResponseEntity<OrderReponsitory>(orderReponsitory, HttpStatus.OK);
 	}
 }

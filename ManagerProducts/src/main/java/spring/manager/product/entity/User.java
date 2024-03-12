@@ -1,6 +1,8 @@
 package spring.manager.product.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 	int id;
 	String fullName;
 
