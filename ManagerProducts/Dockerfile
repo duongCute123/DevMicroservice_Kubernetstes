@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre-focal
+FROM maven:3.8.5-openjdk-17
 VOLUME /tmp
 ARG JAVA_OPTS
 ENV JAVA_OPTS=$JAVA_OPTS

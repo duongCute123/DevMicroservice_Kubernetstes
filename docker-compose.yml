@@ -1,51 +1,44 @@
 version: '3.4'
 
-services: 
+services:
   service-product:
-   # container_name: spring-app
-    image: springbooot-app
-    restart: always
+    image: service-product
     build: ./ManagerProducts
     ports:
-      - 8802:8802 
+      - "8802:8802"
     environment:
-      MYSQL_HOST: mysqldb
-      MYSQL_USER: root
-      MYSQL_PASSWORD: khanhly1
-      MYSQL_PORT: 3306
-
+      - MYSQL_HOST= mysqldb
+      - MYSQL_USER= root
+      - MYSQL_PASSWORD= khanhly1
+      - MYSQL_PORT= 3306
+      - MYSQL_DATABASE= mangerproduct
+      - SPRING_DATASOURCE_URL= jdbc:mysql://docker-mysql:3306/mangerproduct?autoReconnect=true&useSSL=false
+    networks:
+      - microservicestore
+    depends_on:
+      - mysqldb
   service-discolary:
-   # container_name: spring-app
-    image: discolary
-    restart: always
+    image: service-discolary
     build: ./Microservice-Service-Registry
     ports:
-      - 8761:8761 
-  service-gateway:
-   # container_name: spring-app
-    image: gateway
-    restart: always
-    build: ./ServiceGateway
-    ports:
-      - 8803:8803 
-  service-config-server:
-   # container_name: spring-app
-    image: container_name
-    restart: always
-    build: ./SpringConfigServer
-    ports:
-      - 8888:8888
-  mysqldb: 
+      - "8761:8761"
+    networks:
+      - microservicestore
+  mysqldb:
     container_name: mysqldb
     image: mysql
-    ports: 
-     - 3307:3306   
+    ports:
+      - "3307:3306"
     environment:
-      MYSQL_DATABASE: lamdocker
-      MYSQL_ROOT_PASSWORD: khanhly1
+      - MYSQL_ROOT_PASSWORD=khanhly1
+      - MYSQL_DATABASE=mangerproduct
+    networks:
+      - microservicestore
   redis-spring-boot:
     image: redis:alpine
     ports:
-      - 6380:6379
-    tty: true
-
+      - "6380:6379"
+    networks:
+      - microservicestore
+networks:
+  microservicestore:
